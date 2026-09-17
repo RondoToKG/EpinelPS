@@ -52,6 +52,7 @@ public class ProceedMsg : LobbyMessage
             if (state == 2 && existingMessage.State != 2)
                 existingMessage.State = 2;
             else if (state == 1 && existingMessage.State == 0)
+
                 existingMessage.State = 1;
             response.Message = existingMessage;
         }

@@ -50,11 +50,13 @@ public class EnterFinishSubquest : LobbyMessage
         {
             if (isCompleted)
                 existingMessage.State = 2;
+
             response.Message = existingMessage;
         }
         else
         {
             int state = isCompleted ? 2 : (conversation.Value.MessageType == MessengerMessageType.Reward ? 1 : 0);
+
             response.Message = user.CreateMessage(conversation.Value, state);
             JsonDb.Save();
         }

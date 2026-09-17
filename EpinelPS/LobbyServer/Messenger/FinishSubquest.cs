@@ -46,6 +46,7 @@ public class FinishSubquest : LobbyMessage
                     }
                     JsonDb.Save();
                 }
+
                 await WriteDataAsync(response);
                 return;
             }
@@ -70,6 +71,7 @@ public class FinishSubquest : LobbyMessage
             user.AddTrigger(Trigger.SubQuestClear, 1, req.SubQuestId);
         }
 
+
         if (rewardId != 0)
         {
             RewardRecord? rewardRecord = GameData.Instance.GetRewardTableEntry(rewardId);
@@ -81,6 +83,7 @@ public class FinishSubquest : LobbyMessage
 
         // Reconcile eligible subquests (e.g. next subquest in chain)
         MessengerMessageCreator.CreateEligibleSubquestOpeners(user);
+
 
         JsonDb.Save();
 

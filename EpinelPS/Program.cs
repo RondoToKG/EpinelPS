@@ -67,6 +67,17 @@ internal class Program
                 ClearStage.ReconcileMainQuests(user);
             }
 
+
+
+            foreach (var user in JsonDb.Instance.Users)
+            {
+                if (user.LastNormalStageCleared >= 6000002)
+                {
+                    ClearStage.EnsureDefaultCharacters(user);
+                }
+                ClearStage.ReconcileMainQuests(user);
+            }
+
             Console.WriteLine("Initializing database");
             JsonDb.Save();
 

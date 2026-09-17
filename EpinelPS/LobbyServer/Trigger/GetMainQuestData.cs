@@ -8,6 +8,8 @@ public class GetMainQuestData : LobbyMessage
         ReqGetMainQuestData req = await ReadData<ReqGetMainQuestData>();
         User user = GetUser();
 
+        Stage.ClearStage.ReconcileMainQuests(user);
+
         ResGetMainQuestData response = new();
         foreach (KeyValuePair<int, bool> item in user.MainQuestData)
         {

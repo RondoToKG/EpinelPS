@@ -328,7 +328,6 @@ public class ClearStage : LobbyMessage
                 }
             }
         }
-
         // Remove any quests that are beyond the user's progress
         List<int> toRemove = user.MainQuestData.Keys.Where(k => !validSet.Contains(k)).ToList();
         foreach (int k in toRemove)

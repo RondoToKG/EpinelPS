@@ -177,7 +177,6 @@ public class AdminCommands
                 }
 
                 user.LastNormalStageCleared = lastClearedStageId;
-
                 // Sync main quest progression along the quest chain up to the last cleared stage
                 List<int> validQuests = ClearStage.GetCompletedQuestsForStage(lastClearedStageId);
                 HashSet<int> validQuestSet = [.. validQuests];
@@ -251,7 +250,6 @@ public class AdminCommands
                         }
                     }
                 }
-                Logging.WriteLine($"[Admin] CompleteStage recorded {completedQuestTriggers} MainQuestClear triggers for user {user.ID} up to stage {lastClearedStageId}", LogType.Info);
 
                 // Reconcile eligible Messenger openers
                 MessengerMessageCreator.CreateAllEligibleOpeners(user);

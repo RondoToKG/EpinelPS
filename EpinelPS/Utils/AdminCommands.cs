@@ -251,6 +251,7 @@ public class AdminCommands
                         }
                     }
                 }
+                Logging.WriteLine($"[Admin] CompleteStage recorded {completedQuestTriggers} MainQuestClear triggers for user {user.ID} up to stage {lastClearedStageId}", LogType.Info);
 
                 // Reconcile eligible Messenger openers
                 MessengerMessageCreator.CreateAllEligibleOpeners(user);

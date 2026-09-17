@@ -59,6 +59,27 @@ public class GameContext : DbContext
         Options = builder.Options;
     }
 
+    public static void InitializeOptions(string connectionString, string? connectionType)
+    {
+        var builder = new DbContextOptionsBuilder<GameContext>();
+        switch (connectionType?.ToLowerInvariant())
+        {
+            case "sql":
+                builder.UseSqlServer(connectionString);
+                break;
+            case "mysql":
+                builder.UseMySQL(connectionString);
+                break;
+            case "npgsql":
+                builder.UseNpgsql(connectionString);
+                break;
+            default:
+                builder.UseSqlite(connectionString);
+                break;
+        }
+        Options = builder.Options;
+    }
+
     public static void SetInstance(GameContext context)
     {
         Instance = context;

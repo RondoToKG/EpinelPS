@@ -77,7 +77,7 @@ public class GameContext : DbContext
                 builder.UseSqlite(connectionString);
                 break;
         }
-        Options = builder.Options;
+        Options = builder.Options;)
     }
 
     public static void InitializeOptions(string connectionString, string? connectionType)

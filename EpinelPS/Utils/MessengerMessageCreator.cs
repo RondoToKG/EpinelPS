@@ -149,6 +149,8 @@ public static class MessengerMessageCreator
                     .OrderBy(item => item.Key)
                     .FirstOrDefault();
             }
+            if (opener.Value == null)
+
                 continue;
 
             if (!MessengerAccessValidator.IsRoomUnlockSatisfied(user, opener.Value.RoomId))

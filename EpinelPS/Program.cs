@@ -56,19 +56,6 @@ internal class Program
                 MessengerMessageCreator.CreateAllEligibleOpeners(user, logToConsole: false);
             }
 
-
-
-            foreach (var user in JsonDb.Instance.Users)
-            {
-                if (user.LastNormalStageCleared >= 6000002)
-                {
-                    ClearStage.EnsureDefaultCharacters(user);
-                }
-                ClearStage.ReconcileMainQuests(user);
-            }
-
-
-
             foreach (var user in JsonDb.Instance.Users)
             {
                 if (user.LastNormalStageCleared >= 6000002)

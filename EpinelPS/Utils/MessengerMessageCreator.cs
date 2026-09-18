@@ -168,6 +168,7 @@ public static class MessengerMessageCreator
         return createdCount;
     }
 
+
     /// <summary>
     /// Checks whether a room already has an active conversation in MessengerData that
     /// has not been entered/cleared by the user. Prevents dialogue interleaving and soft-locks.
@@ -231,10 +232,10 @@ public static class MessengerMessageCreator
     {
         if (user.MessengerData.Any(message => message.ConversationId == condition.Tid))
         {
-<<<<<<< HEAD
             Logging.WriteLine($"[Messenger] Opener already exists: user={user.ID}, MessengerCondition={condition.Id}, Tid={condition.Tid}", LogType.Debug, logToConsole);
 =======
->>>>>>> 83c20b2 (Clean up `Logging.WriteLine` so that no clutter on console.)
+            Logging.WriteLine($"[Messenger] Opener already exists: user={user.ID}, MessengerCondition={condition.Id}, Tid={condition.Tid}", LogType.Debug, logToConsole);
+>>>>>>> 7808185 (Added `bool toConsole = true` to `Logging.WriteLine` so that they aren't clogging the console everytime.)
             return false;
         }
 
@@ -264,7 +265,7 @@ public static class MessengerMessageCreator
         // A room should only have one active conversation at a time to prevent UI breaks.
         if (!string.IsNullOrEmpty(opener.Value.RoomId) && HasActiveUnclearedConversationInRoom(user, opener.Value.RoomId))
         {
-            Logging.WriteLine($"[Messenger] Room {opener.Value.RoomId} already has an active unread conversation; postponing Tid={condition.Tid}", LogType.Debug);
+            Logging.WriteLine($"[Messenger] Room {opener.Value.RoomId} already has an active unread conversation; postponing Tid={condition.Tid}", LogType.Debug, logToConsole);
             return false;
         }
 

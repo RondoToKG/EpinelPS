@@ -46,21 +46,18 @@ public class ProceedMsg : LobbyMessage
             state = 0;
         }
 
-
         NetMessage? existingMessage = user.MessengerData.FirstOrDefault(x => x.MessageId == req.MessageId);
         if (existingMessage != null)
         {
             if (state == 2 && existingMessage.State != 2)
                 existingMessage.State = 2;
             else if (state == 1 && existingMessage.State == 0)
-
                 existingMessage.State = 1;
             response.Message = existingMessage;
         }
         else
         {
             response.Message = user.CreateMessage(convId, req.MessageId, state);
-
         }
 
         JsonDb.Save();

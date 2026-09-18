@@ -46,7 +46,6 @@ public class FinishSubquest : LobbyMessage
                     }
                     JsonDb.Save();
                 }
-
                 await WriteDataAsync(response);
                 return;
             }
@@ -70,7 +69,6 @@ public class FinishSubquest : LobbyMessage
             }
             user.AddTrigger(Trigger.SubQuestClear, 1, req.SubQuestId);
         }
-
 
         if (rewardId != 0)
         {

@@ -149,7 +149,6 @@ public static class MessengerMessageCreator
                     .OrderBy(item => item.Key)
                     .FirstOrDefault();
             }
-            if (opener.Value == null)
                 continue;
 
             if (!MessengerAccessValidator.IsRoomUnlockSatisfied(user, opener.Value.RoomId))
@@ -162,13 +161,18 @@ public static class MessengerMessageCreator
             // Create the starting opener message in BlaBla
             user.CreateMessage(opener.Value);
 
+            // Also ensure it is enrolled in user.SubQuestData with isReceived = false
+            if (!user.SubQuestData.ContainsKey(subQuest.Id))
+            {
+                user.SetSubQuest(subQuest.Id, false);
+            }
+
             createdCount++;
             Logging.WriteLine($"[Messenger] Created subquest opener: user={user.ID}, SubQuestId={subQuest.Id}, Tid={subQuest.ConversationId}", LogType.Info, logToConsole);
         }
 
         return createdCount;
     }
-
 
     /// <summary>
     /// Checks whether a room already has an active conversation in MessengerData that
@@ -205,7 +209,11 @@ public static class MessengerMessageCreator
                 bool isCleared = clearedConditionIds.Contains(cond.Id);
                 if (!isCleared)
                 {
-                    return true;
+                    bool hasProgressed = user.MessengerData.Any(m => m.ConversationId == convId && m.State != 0);
+                    if (!hasProgressed)
+                    {
+                        return true;
+                    }
                 }
             }
             else
@@ -252,6 +260,14 @@ public static class MessengerMessageCreator
         if (!string.IsNullOrEmpty(opener.Value.RoomId) && HasActiveUnclearedConversationInRoom(user, opener.Value.RoomId))
         {
             Logging.WriteLine($"[Messenger] Room {opener.Value.RoomId} already has an active unread conversation; postponing Tid={condition.Tid}", LogType.Debug, logToConsole);
+            return false;
+        }
+
+        // Avoid spawning multiple active unread conversations in the same room simultaneously.
+        // A room should only have one active conversation at a time to prevent UI breaks.
+        if (!string.IsNullOrEmpty(opener.Value.RoomId) && HasActiveUnclearedConversationInRoom(user, opener.Value.RoomId))
+        {
+            Logging.WriteLine($"[Messenger] Room {opener.Value.RoomId} already has an active unread conversation; postponing Tid={condition.Tid}", LogType.Debug);
             return false;
         }
 

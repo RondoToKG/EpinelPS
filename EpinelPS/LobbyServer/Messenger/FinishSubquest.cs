@@ -84,7 +84,6 @@ public class FinishSubquest : LobbyMessage
         // Reconcile eligible subquests (e.g. next subquest in chain)
         MessengerMessageCreator.CreateEligibleSubquestOpeners(user);
 
-
         JsonDb.Save();
 
         await WriteDataAsync(response);

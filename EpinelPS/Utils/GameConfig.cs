@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using System.Diagnostics;
 
 namespace EpinelPS.Utils;
@@ -22,6 +22,14 @@ public class GameConfigRoot
     /// this is only for displaying the target version in admin console or cli
     /// </summary>
     public string TargetVersion { get; set; } = "";
+    /// <summary>
+    /// Solo Raid boss selection mode: "AutoCycle" (default: rotates weekly across all available bosses), "Latest" (newest boss in static data), or "Fixed" (specified by SoloRaidFixedId).
+    /// </summary>
+    public string SoloRaidMode { get; set; } = "AutoCycle";
+    /// <summary>
+    /// Fixed Solo Raid ID when SoloRaidMode is "Fixed".
+    /// </summary>
+    public int SoloRaidFixedId { get; set; } = 0;
 }
 
 public class StaticData
@@ -81,7 +89,7 @@ public static class GameConfig
         _root = JsonConvert.DeserializeObject<GameConfigRoot>(File.ReadAllText(configPath));
     }
 
-    internal static void Save()
+    public static void Save()
     {
         if (Root != null)
         {

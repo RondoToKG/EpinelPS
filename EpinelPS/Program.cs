@@ -65,13 +65,17 @@ internal class Program
             }
 
             foreach (var user in JsonDb.Instance.Users)
-            {
+
                 if (user.LastNormalStageCleared >= 6000002)
                 {
                     ClearStage.EnsureDefaultCharacters(user);
                 }
                 ClearStage.ReconcileMainQuests(user, logToConsole: false);
+                ClearStage.ReconcileSubquestStages(user);
+                MissionReconciler.ReconcileAll(user, logToConsole: false);
                 MessengerMessageCreator.CreateAllEligibleOpeners(user, logToConsole: false);
+                // Restock Union Chips (GuildCoin) to at least 100,000 on every server restart
+                user.Currency[CurrencyType.GuildCoin] = Math.Max(user.GetCurrencyVal(CurrencyType.GuildCoin), 100000);
             }
 
             Console.WriteLine("Initializing database");
